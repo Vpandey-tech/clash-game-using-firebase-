@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Clash - Game</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Styles -->
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e3a8a, #7c3aed);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .game-container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      padding: 2rem;
+      max-width: 800px;
+      width: 100%;
+    }
+    .color-tile {
+      width: 100px;
+      height: 100px;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .color-tile:hover {
+      transform: scale(1.1);
+    }
+    .btn {
+      background: linear-gradient(to right, #22d3ee, #0ea5e9);
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    .logout-btn {
+      background: linear-gradient(to right, #ef4444, #b91c1c);
+    }
+    .timer-bar {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .timer-progress {
+      height: 100%;
+      background: #22d3ee;
+      transition: width 0.1s linear;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-4xl font-bold">Color Clash</h1>
+      <button id="logout-btn" class="logout-btn px-4 py-2 text-white font-semibold rounded-lg">Logout</button>
+    </div>
+    <div class="flex justify-between mb-4">
+      <div>
+        <p class="text-xl">Score: <span id="score">0</span></p>
+        <p class="text-xl">Time Left: <span id="timer">30</span>s</p>
+        <div class="timer-bar mt-2">
+          <div id="timer-progress" class="timer-progress" style="width: 100%"></div>
+        </div>
+      </div>
+      <div>
+        <p class="text-2xl font-semibold" id="color-name">Red</p>
+      </div>
+    </div>
+    <div id="color-grid" class="grid grid-cols-4 gap-4 mb-6"></div>
+    <div id="game-over" class="hidden text-center">
+      <p class="text-2xl mb-4">Game Over! Final Score: <span id="final-score">0</span></p>
+      <button id="replay-btn" class="btn px-6 py-3 text-white font-semibold rounded-lg">Play Again</button>
+    </div>
+    <div class="mt-6 flex justify-between">
+      <div>
+        <h2 class="text-xl FONT-SEMIbold mb-2">Live Players</h2>
+        <ul id="live-players" class="text-lg"></ul>
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Leaderboard (Top 5)</h2>
+        <ul id="leaderboard" class="text-lg"></ul>
+      </div>
+    </div>
+    <p id="game-error" class="mt-4 text-red-300 text-center hidden"></p>
+  </div>
+  <script type="module" src="js/game.js"></script>
+  <script type="module" src="js/logout.js"></script>
+</body>
+</html>
