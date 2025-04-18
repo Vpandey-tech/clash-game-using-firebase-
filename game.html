@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Color Clash - Game</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Custom Styles -->
   <style>
     body {
       background: linear-gradient(135deg, #1e3a8a, #7c3aed);
@@ -15,35 +12,34 @@
       align-items: center;
       justify-content: center;
       color: white;
+      font-family: Arial, sans-serif;
     }
     .game-container {
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 1rem;
+      border-radius: 16px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-      padding: 2rem;
+      padding: 32px;
       max-width: 800px;
       width: 100%;
     }
     .color-tile {
       width: 100px;
       height: 100px;
-      border-radius: 0.5rem;
+      border-radius: 8px;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
     .color-tile:hover {
       transform: scale(1.1);
     }
-    .btn {
-      background: linear-gradient(to right, #22d3ee, #0ea5e9);
-      transition: all 0.3s ease;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
     .logout-btn {
       background: linear-gradient(to right, #ef4444, #b91c1c);
+      padding: 8px 16px;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
     .timer-bar {
       height: 10px;
@@ -56,42 +52,51 @@
       background: #22d3ee;
       transition: width 0.1s linear;
     }
+    .shake {
+      animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+    }
   </style>
 </head>
 <body>
   <div class="game-container">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-4xl font-bold">Color Clash</h1>
-      <button id="logout-btn" class="logout-btn px-4 py-2 text-white font-semibold rounded-lg">Logout</button>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <h1 style="font-size: 36px; font-weight: bold;">Color Clash</h1>
+      <button id="logout-btn" class="logout-btn">Logout</button>
     </div>
-    <div class="flex justify-between mb-4">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
       <div>
-        <p class="text-xl">Score: <span id="score">0</span></p>
-        <p class="text-xl">Time Left: <span id="timer">30</span>s</p>
-        <div class="timer-bar mt-2">
+        <p style="font-size: 20px;">Score: <span id="score">0</span></p>
+        <p style="font-size: 20px;">Time Left: <span id="timer">30</span>s</p>
+        <div class="timer-bar" style="margin-top: 8px;">
           <div id="timer-progress" class="timer-progress" style="width: 100%"></div>
         </div>
       </div>
       <div>
-        <p class="text-2xl font-semibold" id="color-name">Red</p>
+        <p style="font-size: 24px; font-weight: bold;" id="color-name">Red</p>
       </div>
     </div>
-    <div id="color-grid" class="grid grid-cols-4 gap-4 mb-6"></div>
-    <div id="game-over" class="hidden text-center">
-      <p class="text-2xl mb-4">Game Over! Final Score: <span id="final-score">0</span></p>
-      <button id="replay-btn" class="btn px-6 py-3 text-white font-semibold rounded-lg">Play Again</button>
+    <div id="color-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;"></div>
+    <div id="game-over" style="display: none; text-align: center;">
+      <p style="font-size: 24px; margin-bottom: 16px;">Game Over! Final Score: <span id="final-score">0</span></p>
+      <button id="replay-btn" style="background: linear-gradient(to right, #3b82f6, #1d4ed8); padding: 12px 24px; color: white; font-weight: bold; border: none; border-radius: 8px;">Play Again</button>
     </div>
-    <div class="mt-6 flex justify-between">
+    <div style="margin-top: 24px; display: flex; justify-content: space-between;">
       <div>
-        <h2 class="text-xl FONT-SEMIbold mb-2">Live Players</h2>
-        <ul id="live-players" class="text-lg"></ul>
+        <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 8px;">Live Players</h2>
+        <ul id="live-players" style="font-size: 18px;"></ul>
       </div>
       <div>
-        <h2 class="text-xl font-semibold mb-2">Leaderboard (Top 5)</h2>
-        <ul id="leaderboard" class="text-lg"></ul>
+        <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 8px;">Leaderboard (Top 5)</h2>
+        <ul id="leaderboard" style="font-size: 18px;"></ul>
       </div>
     </div>
-    <p id="game-error" class="mt-4 text-red-300 text-center hidden"></p>
+    <p id="game-error" style="margin-top: 16px; color: #f87171; text-align: center; display: none;"></p>
   </div>
   <script type="module" src="js/game.js"></script>
   <script type="module" src="js/logout.js"></script>

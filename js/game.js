@@ -7,7 +7,11 @@ let score = 0;
 let timeLeft = 30;
 let timerInterval;
 const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange'];
-const gridSize = 8; // 4x2 grid
+const gridSize = 8;
+
+// Audio elements
+const correctSound = new Audio('sounds/correct.mp3');
+const incorrectSound = new Audio('sounds/incorrect.mp3');
 
 // DOM elements
 const scoreDisplay = document.getElementById('score');
@@ -40,8 +44,8 @@ function startGame(user) {
   scoreDisplay.textContent = score;
   timerDisplay.textContent = timeLeft;
   timerProgress.style.width = '100%';
-  gameOverScreen.classList.add('hidden');
-  gameError.classList.add('hidden');
+  gameOverScreen.style.display = 'none';
+  gameError.style.display = 'none';
   updateLiveScore(user, score);
   generateRound();
   startTimer(user);
@@ -64,17 +68,30 @@ function generateRound() {
   }
 }
 
-// Get a random color (excluding the correct one)
+// Get a random color
 function getRandomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
 // Handle tile click
 function handleTileClick(selectedColor, correctColor, user) {
+  const tiles = document.querySelectorAll('.color-tile');
   if (selectedColor === correctColor) {
     score += 10;
+    correctSound.play().catch((error) => {
+      console.error('Error playing correct sound:', error);
+    });
   } else {
     score = Math.max(0, score - 5);
+    incorrectSound.play().catch((error) => {
+      console.error('Error playing incorrect sound:', error);
+    });
+    tiles.forEach(tile => {
+      if (tile.style.backgroundColor === selectedColor) {
+        tile.classList.add('shake');
+        setTimeout(() => tile.classList.remove('shake'), 500);
+      }
+    });
   }
   scoreDisplay.textContent = score;
   updateLiveScore(user, score);
@@ -90,7 +107,7 @@ function updateLiveScore(user, score) {
     timestamp: Date.now()
   }).catch((error) => {
     gameError.textContent = 'Error updating score: ' + error.message;
-    gameError.classList.remove('hidden');
+    gameError.style.display = 'block';
   });
 }
 
@@ -110,11 +127,10 @@ function startTimer(user) {
 
 // End the game
 function endGame(user) {
-  gameOverScreen.classList.remove('hidden');
+  gameOverScreen.style.display = 'block';
   finalScoreDisplay.textContent = score;
   colorGrid.innerHTML = '';
   saveScore(user, score);
-  // Clear live score
   const liveScoreRef = ref(database, `live_scores/${user.uid}`);
   set(liveScoreRef, null);
 }
@@ -131,12 +147,12 @@ function saveScore(user, score) {
       lastScore: score
     }).catch((error) => {
       gameError.textContent = 'Error saving score: ' + error.message;
-      gameError.classList.remove('hidden');
+      gameError.style.display = 'block';
     });
   });
 }
 
-// Load leaderboard (top 5 high scores)
+// Load leaderboard
 function loadLeaderboard() {
   const scoresRef = ref(database, 'scores');
   onValue(scoresRef, (snapshot) => {
@@ -155,30 +171,31 @@ function loadLeaderboard() {
     }
   }, (error) => {
     gameError.textContent = 'Error loading leaderboard: ' + error.message;
-    gameError.classList.remove('hidden');
+    gameError.style.display = 'block';
   });
 }
 
+// Load live players' scores
 function loadLivePlayers() {
-    const liveScoresRef = ref(database, 'live_scores');
-    onValue(liveScoresRef, (snapshot) => {
-      livePlayersList.innerHTML = '';
-      const data = snapshot.val();
-      if (data) {
-        const liveScores = Object.entries(data)
-          .map(([uid, { username, score }]) => ({ username, score }))
-          .sort((a, b) => b.score - a.score);
-        liveScores.forEach((entry) => {
-          const li = document.createElement('li');
-          li.textContent = `${entry.username}: ${entry.score}`;
-          livePlayersList.appendChild(li);
-        });
-      }
-    }, (error) => {
-      gameError.textContent = 'Error loading live players: ' + error.message;
-      gameError.classList.remove('hidden');
-    });
-  }
+  const liveScoresRef = ref(database, 'live_scores');
+  onValue(liveScoresRef, (snapshot) => {
+    livePlayersList.innerHTML = '';
+    const data = snapshot.val();
+    if (data) {
+      const liveScores = Object.entries(data)
+        .map(([uid, { username, score }]) => ({ username, score }))
+        .sort((a, b) => b.score - a.score);
+      liveScores.forEach((entry) => {
+        const li = document.createElement('li');
+        li.textContent = `${entry.username}: ${entry.score}`;
+        livePlayersList.appendChild(li);
+      });
+    }
+  }, (error) => {
+    gameError.textContent = 'Error loading live players: ' + error.message;
+    gameError.style.display = 'block';
+  });
+}
 
 // Replay game
 replayBtn.addEventListener('click', () => {
