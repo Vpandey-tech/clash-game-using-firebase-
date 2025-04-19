@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Clash - Choose Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc;
+      margin-bottom: 2rem;
+    }
+    .game-buttons {
+      display: flex;
+      gap: 2rem;
+    }
+    button {
+      padding: 1rem 2rem;
+      background: linear-gradient(90deg, #00ffcc, #ff00ff);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      box-shadow: 0 0 20px #00ffcc;
+      transform: scale(1.05);
+    }
+    .logout {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      background: #ff0066;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .game-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <button class="logout" onclick="logout()">Logout</button>
+  <h1>Choose Your Game</h1>
+  <div class="game-buttons">
+    <button onclick="window.location.href='game.html'">Color Clash</button>
+    <button onclick="window.location.href='pixel-painter.html'">Pixel Painter</button>
+  </div>
+  <script type="module">
+    import { logout } from './js/auth.js';
+    window.logout = logout;
+  </script>
+</body>
+</html>

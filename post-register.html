@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Color Clash - Login</title>
+  <title>Color Clash - Welcome</title>
   <style>
     * {
       margin: 0;
@@ -19,7 +19,7 @@
       min-height: 100vh;
       color: #fff;
     }
-    .login-container {
+    .welcome-container {
       background: rgba(0, 0, 0, 0.3);
       padding: 2rem;
       border-radius: 10px;
@@ -33,24 +33,10 @@
       margin-bottom: 1.5rem;
       text-shadow: 0 0 10px #000;
     }
-    input {
-      display: block;
-      width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-    input::placeholder {
-      color: #ccc;
-    }
     button {
       width: 100%;
       padding: 0.8rem;
-      margin: 0.5rem 0;
+      margin: 1rem 0;
       border: none;
       border-radius: 5px;
       background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
@@ -59,12 +45,32 @@
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    button:disabled {
-      background: #666;
-      cursor: not-allowed;
-    }
-    button:hover:not(:disabled) {
+    button:hover {
       box-shadow: 0 0 10px #fff;
+    }
+    .dashboard {
+      text-align: left;
+    }
+    .dashboard h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 5px #000;
+    }
+    .dashboard p {
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+    .dashboard ul {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    .dashboard li {
+      font-size: 0.9rem;
+      padding: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .dashboard li:last-child {
+      border-bottom: none;
     }
     .error {
       color: #ff4444;
@@ -74,26 +80,33 @@
       display: none;
     }
     @media (max-width: 600px) {
-      .login-container {
+      .welcome-container {
         padding: 1rem;
         max-width: 90%;
       }
       h1 {
         font-size: 1.5rem;
       }
+      .dashboard h2 {
+        font-size: 1.2rem;
+      }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="login-container">
-    <h1>Color Clash</h1>
-    <input type="email" id="email" placeholder="Email" autocomplete="email" required>
-    <input type="password" id="password" placeholder="Password" autocomplete="current-password" required>
-    <button id="login">Login</button>
-    <button id="register" onclick="window.location.href='register.html'">Create an Account</button>
-    <div id="error" class="error"></div>
+  <div class="welcome-container">
+    <h1>Welcome to Color Clash!</h1>
+    <div class="dashboard">
+      <h2>Game History</h2>
+      <ul id="history"></ul>
+      <h2>User Profile</h2>
+      <p id="username">Username: Loading...</p>
+      <p id="email">Email: Loading...</p>
+      <div id="error" class="error"></div>
+    </div>
+    <button onclick="window.location.href='games.html'">Continue to Games</button>
   </div>
-  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/profile.js"></script>
 </body>
 </html>

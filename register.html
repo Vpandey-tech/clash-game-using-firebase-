@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Color Clash - Login</title>
+  <title>Color Clash - Register</title>
   <style>
     * {
       margin: 0;
@@ -19,7 +19,7 @@
       min-height: 100vh;
       color: #fff;
     }
-    .login-container {
+    .register-container {
       background: rgba(0, 0, 0, 0.3);
       padding: 2rem;
       border-radius: 10px;
@@ -74,7 +74,7 @@
       display: none;
     }
     @media (max-width: 600px) {
-      .login-container {
+      .register-container {
         padding: 1rem;
         max-width: 90%;
       }
@@ -86,12 +86,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="login-container">
-    <h1>Color Clash</h1>
+  <div class="register-container">
+    <h1>Create Account</h1>
+    <input type="text" id="username" placeholder="Username" autocomplete="username" required maxlength="20">
     <input type="email" id="email" placeholder="Email" autocomplete="email" required>
-    <input type="password" id="password" placeholder="Password" autocomplete="current-password" required>
-    <button id="login">Login</button>
-    <button id="register" onclick="window.location.href='register.html'">Create an Account</button>
+    <input type="password" id="password" placeholder="Password" autocomplete="new-password" required>
+    <input type="text" id="security-code" placeholder="Security Code (4-6 characters)" autocomplete="off" required minlength="4" maxlength="6">
+    <button id="register-btn">Register</button>
     <div id="error" class="error"></div>
   </div>
   <script type="module" src="js/auth.js"></script>
